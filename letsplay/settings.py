@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'channels',
-    'users',
+    'lpusers',
     'lessons',
     'widget_tweaks',
     'rest_framework',
