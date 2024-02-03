@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from users.models import Teacher, Pupil
+from lpusers.models import Teacher, Pupil
 
 class Group(models.Model):
     name = models.CharField(max_length=100)
