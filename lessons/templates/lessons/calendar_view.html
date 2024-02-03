@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lessons Calendar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href='https://fullcalendar.io/releases/fullcalendar/3.10.0/fullcalendar.min.css' rel='stylesheet' />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src='https://fullcalendar.io/releases/fullcalendar/3.10.0/lib/moment.min.js'></script>
+    <script src='https://fullcalendar.io/releases/fullcalendar/3.10.0/fullcalendar.min.js'></script>
+</head>
+<body>
+    <h2>Lessons Calendar</h2>
+    <div>
+        <h3>Filters:</h3>
+        <form method="get" class="form-inline">
+            <select name="filter_by" class="form-control mb-2 mr-sm-2" required>
+                <option value="">--Select Filter--</option>
+                <option value="teacher">Teacher</option>
+                <option value="pupil">Pupil</option>
+                <option value="group">Group</option>
+            </select>
+            <input type="text" class="form-control mb-2 mr-sm-2" name="id" placeholder="Enter ID" required>
+            <button type="submit" class="btn btn-primary mb-2">Filter</button>
+        </form>
+    </div>
+    <div id='calendar'></div>
+    
+    <script>
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                events: {
+                    url: '/api/lessons/',
+                    error: function() {
+                        alert('Could not load lessons.');
+                    }
+                },
+                eventClick: function(event) {
+                    // Open modal here to edit or view event details
+                    // This is where you would also include further details or an edit form for the lesson
+                    alert('Event: ' + event.title);
+                    // In production, here would be the implementation of a call to a modal or another page
+                },
+                loading: function(bool) {
+                    console.log('Loading calendar events: ' + bool);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}
