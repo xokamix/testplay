@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework import routers
-from users.api.views import CustomAuthToken
+from lpusers.api.views import CustomAuthToken
 from lessons.api.views import TeacherViewSet, PupilViewSet, LessonViewSet
 
 router = routers.DefaultRouter()

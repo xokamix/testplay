@@ -1,8 +1,8 @@
 from rest_framework import viewsets
-from users.api.serializers import TeacherSerializer, PupilSerializer
+from lpusers.api.serializers import TeacherSerializer, PupilSerializer
 from lessons.models import Lesson
-from users.models import Teacher, Pupil
-from users.api.serializers import LessonSerializer
+from lpusers.models import Teacher, Pupil
+from lpusers.api.serializers import LessonSerializer
 
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
