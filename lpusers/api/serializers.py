@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import Teacher, Pupil
+from lpusers.models import Teacher, Pupil
 from lessons.models import Lesson
 
 class TeacherSerializer(serializers.ModelSerializer):
