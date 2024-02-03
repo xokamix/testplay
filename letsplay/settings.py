@@ -29,9 +29,9 @@ SECRET_KEY = 'django-insecure-rc+=#$(z$!p9z#_h6a+o&d67yq2oysrjtv$5ut^8(ueb@(rgu#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
-
+AUTH_USER_MODEL = 'lpusers.lpUser'
 # Application definition
 
 INSTALLED_APPS = [
