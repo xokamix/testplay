@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-TELEGRAM_TOKEN = '6474234096:AAGlt7B7jicTa6UGuomO1z1R0trmVzLRET0'
+TELEGRAM_TOKEN = ''
 BACKEND_API_URL = 'http://localhost:8000/api/'
 API_TOKEN = 'YOUR_API_TOKEN'
 
