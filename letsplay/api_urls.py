@@ -1,7 +1,10 @@
 from django.urls import path, include
 from rest_framework import routers
-from lpusers.api.views import CustomAuthToken
-from lessons.api.views import TeacherViewSet, PupilViewSet, LessonViewSet
+from users.api.views import CustomAuthToken
+from lessons.api.views import TeacherViewSet, PupilViewSet, LessonViewSet, get_recurring_lessons
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = routers.DefaultRouter()
 router.register(r'teachers', TeacherViewSet)
@@ -13,3 +16,9 @@ urlpatterns = [
 ]
 
 urlpatterns += router.urls
+
+urlpatterns += [
+    path('lessons/recurring/', get_recurring_lessons, name='get_recurring_lessons'),
+]
+
+logger.info("URL patterns for LetsPlay's API configured successfully.")

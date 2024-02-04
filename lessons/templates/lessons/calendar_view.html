@@ -41,6 +41,7 @@
                     url: '/api/lessons/',
                     error: function() {
                         alert('Could not load lessons.');
+                        console.log('Failed to load lessons from /api/lessons/ endpoint.');
                     }
                 },
                 eventClick: function(event) {
@@ -53,6 +54,38 @@
                     console.log('Loading calendar events: ' + bool);
                 }
             });
+
+            const calendarEl = $('#calendar');
+            function fetchRecurringLessons() {
+                $.ajax({
+                    url: '/api/lessons/recurring/',
+                    data: {
+                        'start_date': '2024-01-01',
+                        'end_date': '2024-12-31'
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        'Authorization': 'Token YOUR_API_TOKEN'
+                    },
+                    success: function(data) {
+                        const events = data.map(lesson => {
+                            return {
+                                title: lesson.title,
+                                start: new Date(lesson.schedule),
+                                allDay: false
+                            };
+                        });
+                        calendarEl.fullCalendar('renderEvents', events, true);
+                        console.log('Recurring lessons successfully fetched and rendered.');
+                    },
+                    error: function(e) {
+                        console.error("Error fetching recurring lessons", e);
+                        alert('Could not load recurring lessons.');
+                    }
+                });
+            }
+            fetchRecurringLessons();
         });
     </script>
 </body>
