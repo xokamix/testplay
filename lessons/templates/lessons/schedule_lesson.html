@@ -1,14 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Schedule Lesson</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h2>Schedule a New Lesson</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save Lesson</button>
-    </form>
+    <div class="container">
+        <h2 class="my-4">Schedule a New Lesson</h2>
+        <form method="post" id="lessonForm">
+            {% csrf_token %}
+            {{ lesson_form.as_p }}
+            <hr>
+            <div class="form-group">
+                <label for="recurrenceFrequency">Recurrence Frequency</label>
+                <select class="form-control" id="recurrenceFrequency" name="recurrenceFrequency">
+                    <option value="">Select Frequency</option>
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+            </div>
+            <div class="form-group" id="daysOfWeek" style="display:none;">
+                <label>Select Days</label>
+                {% for day in lesson_form.fields.weekly_recurrence.choices %}
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="weekly_recurrence" value="{{ day.0 }}" id="day{{ day.0 }}">
+                        <label class="form-check-label" for="day{{ day.0 }}">
+                            {{ day.1 }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">Save Lesson</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const recurrenceFrequencySelect = document.getElementById('recurrenceFrequency');
+            const daysOfWeekContainer = document.getElementById('daysOfWeek');
+
+            function log(message) {
+                console.log(`[Lesson Form] ${message}`);
+            }
+
+            function toggleDaysOfWeek() {
+                const selectedFrequency = recurrenceFrequencySelect.value;
+                daysOfWeekContainer.style.display = (selectedFrequency === 'weekly') ? 'block' : 'none';
+                log(`Toggled Days Of Week display for frequency '${selectedFrequency}'.`);
+            }
+
+            toggleDaysOfWeek();
+
+            recurrenceFrequencySelect.addEventListener('change', function() {
+                toggleDaysOfWeek();
+            });
+
+            document.getElementById('lessonForm').addEventListener('submit', function(event) {
+                const weeklyRecurrence = recurrenceFrequencySelect.value === 'weekly';
+                const checkboxes = document.querySelectorAll('input[name="weekly_recurrence"]');
+                const atLeastOneChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+                if (weeklyRecurrence && !atLeastOneChecked) {
+                    alert('Please select at least one day for weekly recurrence.');
+                    log('Form validation failed. Weekly recurrence requires at least one day selected.');
+                    event.preventDefault();
+                } else {
+                    log('Form submitted successfully.');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+{% endblock %}
